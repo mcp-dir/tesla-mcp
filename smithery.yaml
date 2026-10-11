@@ -1,0 +1,38 @@
+# Smithery configuration for Tesla
+# Schema: https://smithery.ai/docs/build/project-config
+# Remote HTTP MCP — server hosted at https://api.mcp.ai/p_tesla
+
+name: tesla-mcp
+displayName: "Tesla"
+description: >
+  Converse com o seu **Tesla** a partir do Claude, do ChatGPT ou de qualquer cliente MCP. Roda sobre a **Fleet API oficial da Tesla**, com a **sua própria conta Tesla** (OAuth) e **sem intermediário**. O destaque é a **navegação**: "manda esse endereço pro meu carro" coloca a rota na tela do carro, a partir de um endereço, de coordenadas ou do Supercharger mais próximo. Também lê **bateria, autonomia, carga, clima, travas e localização**, e manda comandos: travar e destravar, ligar o ar e ajustar a temperatura, iniciar ou parar a carga e o limite, buzinar e piscar. Os comandos são assinados pelo **Vehicle Command Protocol** da Tesla. Pague por uso com crédito pré-pago. **Não afiliado à Tesla.**
+
+version: 0.1.0
+license: MIT
+homepage: https://github.com/mcp-dir/tesla-mcp
+repository: https://github.com/mcp-dir/tesla-mcp
+
+tags:
+  - tesla
+  - ev
+  - electric-vehicle
+  - fleet-api
+  - navigation
+  - car
+  - charging
+  - smart-home
+  - read-write
+
+# Remote HTTP MCP — sem startCommand local (servidor já hospedado)
+startCommand:
+  type: http
+  url: https://api.mcp.ai/p_tesla
+
+auth:
+  type: oauth2
+  resourceMetadataUrl: https://api.mcp.ai/p_tesla/.well-known/oauth-protected-resource
+  fallback:
+    type: agent-auth
+    description: >
+      Para clientes sem OAuth 2.1. O agente expõe uma tool authenticate(token).
+      Usuário gera o JWT em https://app.mcp.ai/agent-auth e cola no chat.
